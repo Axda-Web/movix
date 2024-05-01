@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased w-full mx-auto max-w-screen-2xl",
+          "min-h-screen font-sans antialiased w-full mx-auto max-w-screen-2xl px-6",
           fontOutfit.variable
         )}
       >
