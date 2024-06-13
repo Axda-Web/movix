@@ -7,9 +7,9 @@ dotenv.config({
 
 export default defineConfig({
   schema: "./db/schema.ts",
-  driver: "pg",
+  dialect: "postgresql",
   dbCredentials: {
-    connectionString: process.env.NEON_DATABASE_URL!,
+    url: process.env.NEON_DATABASE_URL as string,
   },
   out: "./drizzle",
 });
