@@ -3,9 +3,51 @@ import {
   pgTable,
   text,
   primaryKey,
+  smallint,
+  boolean,
+  pgEnum,
+  varchar,
   integer,
 } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
 import type { AdapterAccount } from "next-auth/adapters";
+
+export const mediaCategoryEnum = pgEnum("category", ["Movie", "TV Series"]);
+export const mediaRatingEnum = pgEnum("rating", ["E", "PG", "18+"]);
+export const thumbnailTypeEnum = pgEnum("type", ["trending", "regular"]);
+export const thumbnailSizeEnum = pgEnum("size", ["small", "medium", "large"]);
+
+export const medias = pgTable("media", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  title: varchar("title", { length: 255 }).notNull(),
+  year: smallint("year").notNull(),
+  category: mediaCategoryEnum("category").notNull(),
+  rating: mediaRatingEnum("rating").notNull(),
+  isBookmarked: boolean("isBookmarked").notNull(),
+  isTrending: boolean("isTrending").notNull(),
+});
+
+export const mediasRelations = relations(medias, ({ many }) => ({
+  thumbnails: many(thumbnails),
+}));
+
+export const thumbnails = pgTable("thumbnails", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  mediaId: text("mediaId")
+    .notNull()
+    .references(() => medias.id),
+  type: thumbnailTypeEnum("type").notNull(),
+  size: thumbnailSizeEnum("size").notNull(),
+  url: text("url").notNull(),
+});
+
+export const thumbnailRelations = relations(thumbnails, ({ one }) => ({
+  media: one(medias, { fields: [thumbnails.mediaId], references: [medias.id] }),
+}));
 
 export const users = pgTable("user", {
   id: text("id")

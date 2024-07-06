@@ -9,7 +9,7 @@
     "lint": "next lint",
     "db:generate": "npx drizzle-kit generate",
     "db:clean": "npx drizzle-kit drop",
-    "db:migrate": "npx drizzle-kit migrate",
+    "db:migrate": "tsx drizzle/migrate.ts",
     "db:studio": "npx drizzle-kit studio"
   },
   "dependencies": {
@@ -38,13 +38,13 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
-    "dotenv": "^16.4.5",
     "drizzle-kit": "^0.22.6",
     "eslint": "^8",
     "eslint-config-next": "14.1.4",
     "pg": "^8.11.5",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
+    "tsx": "^4.15.4",
     "typescript": "^5"
   }
 }
