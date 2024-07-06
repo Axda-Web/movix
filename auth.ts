@@ -1,8 +1,8 @@
 import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+// import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import db from "./db/drizzle";
+import db from "./drizzle/db";
 
 // TODO: Set up credentials auth
 
