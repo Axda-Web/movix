@@ -4,6 +4,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/providers/theme-provider";
 
+import { NavBar } from "@/components/navbar";
+
 const fontOutfit = FontOutfit({
   subsets: ["latin"],
   variable: "--font-outfit",
@@ -33,7 +35,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <div className={cn("flex flex-col", "lg:flex-row")}>
+            <NavBar />
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>
