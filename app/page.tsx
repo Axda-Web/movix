@@ -1,5 +1,3 @@
-import { AuthButton } from "../components/auth-button";
-import { ModeToggle } from "@/components/toggle-mode";
 import { cn } from "@/lib/utils";
 import db from "@/drizzle/db";
 import { medias, thumbnails } from "@/drizzle/schema";
@@ -21,10 +19,5 @@ export default async function Home() {
     }),
   ]);
 
-  return (
-    <main className={cn("flex justify-between")}>
-      <AuthButton>Sign in</AuthButton>
-      <ModeToggle />
-    </main>
-  );
+  return <main className={cn("flex justify-between")}></main>;
 }

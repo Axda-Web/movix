@@ -4,6 +4,6 @@ import * as schema from "./schema";
 
 const client = neon(process.env.NEON_DATABASE_URL as string);
 
-const db = drizzle(client, { schema, logger: true });
+const db = drizzle(client, { schema });
 
 export default db;
