@@ -37,3 +37,5 @@ next-env.d.ts
 
 # frontend mentor
 /frontend-mentor-starter
+
+*storybook.log
