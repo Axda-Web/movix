@@ -7,18 +7,7 @@ export interface InputProps
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
-    return (
-      <input
-        type={type}
-        className={cn(
-          "block w-full bg-transparent border-b border-b-secondary p-4 text-[15px] font-light tracking-normal caret-accent",
-          "active:border-b-white",
-          className
-        )}
-        ref={ref}
-        {...props}
-      />
-    );
+    return <input className={cn("", className)} ref={ref} {...props} />;
   }
 );
 Input.displayName = "Input";

@@ -3,6 +3,9 @@ import db from "@/drizzle/db";
 import { medias, thumbnails } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 
+import { SearchBar } from "@/components/searchbar";
+import { Search } from "lucide-react";
+
 export default async function Home() {
   const [trendingMedias, recommendedMedias] = await Promise.all([
     db.query.medias.findMany({
@@ -19,5 +22,9 @@ export default async function Home() {
     }),
   ]);
 
-  return <main className={cn("flex justify-between")}></main>;
+  return (
+    <main className={cn("flex justify-between")}>
+      <SearchBar />
+    </main>
+  );
 }

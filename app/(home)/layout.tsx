@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit as FontOutfit } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/providers/theme-provider";
 
@@ -37,7 +37,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className={cn("flex flex-col", "lg:flex-row")}>
+          <div className={cn("flex flex-col", "lg:flex-row lg:space-x-9")}>
             <NavBar />
             {children}
           </div>
