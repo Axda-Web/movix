@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { AuthFormInput } from "./auth-form-input";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -54,7 +56,7 @@ export function AuthForm({ isSignUp }: AuthFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Email address" {...field} />
+                <AuthFormInput placeholder="Email address" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -66,7 +68,7 @@ export function AuthForm({ isSignUp }: AuthFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Password" {...field} />
+                <AuthFormInput placeholder="Password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -80,7 +82,7 @@ export function AuthForm({ isSignUp }: AuthFormProps) {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Repeat password" {...field} />
+                  <AuthFormInput placeholder="Repeat password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
