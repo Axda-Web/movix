@@ -9,7 +9,7 @@ import {
   varchar,
   integer,
 } from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
+import { relations, InferSelectModel } from "drizzle-orm";
 import type { AdapterAccount } from "next-auth/adapters";
 
 export const mediaCategoryEnum = pgEnum("category", ["Movie", "TV Series"]);
@@ -33,6 +33,8 @@ export const mediasRelations = relations(medias, ({ many }) => ({
   thumbnails: many(thumbnails),
 }));
 
+export type Media = InferSelectModel<typeof medias>;
+
 export const thumbnails = pgTable("thumbnails", {
   id: text("id")
     .primaryKey()
@@ -48,6 +50,8 @@ export const thumbnails = pgTable("thumbnails", {
 export const thumbnailRelations = relations(thumbnails, ({ one }) => ({
   media: one(medias, { fields: [thumbnails.mediaId], references: [medias.id] }),
 }));
+
+export type Thumbnail = InferSelectModel<typeof thumbnails>;
 
 export const users = pgTable("user", {
   id: text("id")
