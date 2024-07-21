@@ -1,7 +1,5 @@
-import { expect, test } from "vitest";
 import { render } from "@testing-library/react";
 import { AuthButton } from "@/components/auth-button";
-import { describe } from "node:test";
 
 describe("AuthButton", () => {
   test("renders AuthButton with children", () => {
