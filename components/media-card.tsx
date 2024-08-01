@@ -13,16 +13,15 @@ import type { Media, Thumbnail } from "@/drizzle/schema";
 
 interface MediaCardProps {
   isTrending: boolean;
-  category: "Movie" | "TV Series";
   media: Media & { thumbnails: Thumbnail[] };
 }
 
 // TODO: Fix image size + Grid
 // TODO: Add bookmark feature
 // TODO: Add trending slider
-// TODO: Add vertical scollable container
+// TODO: Add active and hover states
 
-export function MediaCard({ isTrending, category, media }: MediaCardProps) {
+export function MediaCard({ isTrending, media }: MediaCardProps) {
   const serializedThumbnails = media.thumbnails.reduce(
     (acc, curr) => {
       if (!acc[curr.type]) {
@@ -35,24 +34,42 @@ export function MediaCard({ isTrending, category, media }: MediaCardProps) {
   );
 
   return (
-    <Card className={cn("bg-transparent border-none relative")}>
-      <CardContent className={cn("p-0 relative")}>
+    <Card className={cn("bg-transparent border-none relative flex-shrink-0")}>
+      <CardContent className={cn("p-0 relative w-fit")}>
         {isTrending ? (
           <>
             <Image
               src={serializedThumbnails.trending.large}
               width={470}
               height={230}
-              className={cn("hidden rounded-lg", "md:block")}
+              className={cn(
+                "hidden rounded-lg",
+                "md:block md:w-[470px] md:h-[230px]"
+              )}
               alt="trending media thumbnail"
             />
             <Image
               src={serializedThumbnails.trending.small}
               width={240}
               height={140}
-              className={cn("block rounded-lg", "md:hidden")}
+              className={cn(
+                "block rounded-lg w-[240px] h-[140px]",
+                "md:hidden"
+              )}
               alt="trending media thumbnail"
             />
+            <div
+              className={cn(
+                "absolute top-2 right-2 w-8 h-8 bg-black bg-opacity-50 rounded-full flex items-center justify-center"
+              )}
+            >
+              <Image
+                src="/icons/bookmark-empty.svg"
+                width={12}
+                height={14}
+                alt="bookmark icon"
+              />
+            </div>
           </>
         ) : (
           <>
@@ -60,37 +77,47 @@ export function MediaCard({ isTrending, category, media }: MediaCardProps) {
               src={serializedThumbnails.regular.large}
               width={280}
               height={174}
-              className={cn("hidden rounded-lg", "lg:block")}
+              className={cn(
+                "hidden rounded-lg",
+                "lg:block lg:w-[280px] lg:h-[174px]"
+              )}
               alt="trending media thumbnail"
             />
             <Image
               src={serializedThumbnails.regular.medium}
               width={220}
               height={140}
-              className={cn("hidden rounded-lg", "md:block", "lg:hidden")}
+              className={cn(
+                "hidden rounded-lg",
+                "md:block md:w-[220px] md:h-[140px]",
+                "lg:hidden"
+              )}
               alt="trending media thumbnail"
             />
             <Image
               src={serializedThumbnails.regular.small}
               width={164}
               height={110}
-              className={cn("block rounded-lg", "md:hidden")}
+              className={cn(
+                "block rounded-lg w-[164px] h-[110px]",
+                "md:hidden"
+              )}
               alt="trending media thumbnail"
             />
+            <div
+              className={cn(
+                "absolute top-2 right-2 w-8 h-8 bg-black bg-opacity-50 rounded-full flex items-center justify-center"
+              )}
+            >
+              <Image
+                src="/icons/bookmark-empty.svg"
+                width={12}
+                height={14}
+                alt="bookmark icon"
+              />
+            </div>
           </>
         )}
-        <div
-          className={cn(
-            "absolute top-2 right-2 w-8 h-8 bg-black bg-opacity-50 rounded-full flex items-center justify-center"
-          )}
-        >
-          <Image
-            src="/icons/bookmark-empty.svg"
-            width={12}
-            height={14}
-            alt="bookmark icon"
-          />
-        </div>
       </CardContent>
       <CardFooter
         className={cn("flex flex-col mt-2 pb-2", {
@@ -105,7 +132,7 @@ export function MediaCard({ isTrending, category, media }: MediaCardProps) {
         >
           <span>{media.year}</span>
           <DotSeparator />
-          <MediaCategory category={category} />
+          <MediaCategory category={media.category} />
           <DotSeparator />
           <span>{media.rating}</span>
         </CardDescription>

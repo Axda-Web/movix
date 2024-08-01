@@ -14,7 +14,7 @@ export const NavBar = () => {
       className={cn(
         "flex justify-between items-center px-4 py-5 bg-muted",
         "md:p-6 rounded-lg",
-        "lg:flex-col lg:h-[calc(100vh-64px)] lg:p-8 lg:rounded-2xl lg:relative"
+        "lg:flex-col lg:h-[calc(100vh-64px)] lg:p-8 lg:rounded-2xl lg:fixed"
       )}
     >
       <div>

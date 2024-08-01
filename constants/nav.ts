@@ -10,9 +10,9 @@ export const NAV_ITEMS = [
     icon: "/icons/movie.svg",
   },
   {
-    label: "TV shows",
-    href: "/tv-shows",
-    icon: "/icons/tv-show.svg",
+    label: "TV Series",
+    href: "/tv-series",
+    icon: "/icons/tv-serie.svg",
   },
   {
     label: "Bookmarked medias",

@@ -20,7 +20,11 @@ const formSchema = z.object({
 // TODO: Implement onChange form submission
 // TODO: Add debouncer
 
-export function SearchBar() {
+interface SearchBarProps {
+  placeholder: string;
+}
+
+export function SearchBar({ placeholder }: SearchBarProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -48,7 +52,7 @@ export function SearchBar() {
               <FormControl>
                 <SearchInput
                   type="search"
-                  placeholder="Search for movies or TV series"
+                  placeholder={placeholder}
                   {...field}
                   onChange={(e) => {
                     field.onChange(e);
