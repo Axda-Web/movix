@@ -1,24 +1,40 @@
 import { cn } from "@/lib/utils";
 import db from "@/drizzle/db";
 import { medias } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 import { MediaSection } from "@/components/media-section";
 
 export default async function BookmarkedMediasPage() {
-  const bookmarkedMedias = await db.query.medias.findMany({
-    where: eq(medias.isBookmarked, true),
-    with: {
-      thumbnails: true,
-    },
-  });
+  const [bookmarkedMovies, bookmarkedSeries] = await Promise.all([
+    db.query.medias.findMany({
+      where: and(eq(medias.isBookmarked, true), eq(medias.category, "Movie")),
+      with: {
+        thumbnails: true,
+      },
+    }),
+    db.query.medias.findMany({
+      where: and(
+        eq(medias.isBookmarked, true),
+        eq(medias.category, "TV Series")
+      ),
+      with: {
+        thumbnails: true,
+      },
+    }),
+  ]);
 
   return (
     <div className={cn("px-4", "md:px-0")}>
       <MediaSection
-        title="Bookmarked Medias"
+        title="Bookmarked Movies"
         isTrending={false}
-        medias={bookmarkedMedias}
+        medias={bookmarkedMovies}
+      />
+      <MediaSection
+        title="Bookmarked TV Series"
+        isTrending={false}
+        medias={bookmarkedSeries}
       />
     </div>
   );

@@ -2,7 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+  }
+
+  .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none; 
+  }
+}  */
+
 @layer base {
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
   :root {
     --background: 223, 30%, 9%;
     --foreground: 0, 0%, 100%;
@@ -63,15 +82,6 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
   }
 }
 

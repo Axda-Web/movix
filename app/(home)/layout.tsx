@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 
 import { NavBar } from "@/components/navbar";
 import { SearchBar } from "@/components/searchbar";
+import { Toaster } from "@/components/ui/toaster";
 
 const fontOutfit = FontOutfit({
   subsets: ["latin"],
@@ -51,6 +52,7 @@ export default function RootLayout({
               <SearchBar placeholder="Search for movies or TV series" />
               {children}
             </main>
+            <Toaster />
           </div>
         </ThemeProvider>
       </body>

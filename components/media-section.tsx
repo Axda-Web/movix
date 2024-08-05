@@ -12,7 +12,7 @@ interface MediaCardProps {
 
 export function MediaSection({ title, isTrending, medias }: MediaCardProps) {
   const sectionStyling = isTrending
-    ? cn("flex gap-x-4 overflow-x-auto", "md:gap-x-10")
+    ? cn("flex gap-x-4 overflow-x-auto hide-scrollbar", "md:gap-x-10")
     : cn(
         "grid grid-cols-2 gap-4",
         "md:grid-cols-3 md:gap-6",
