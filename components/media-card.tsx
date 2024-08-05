@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 
 import { MediaCategory, DotSeparator } from "./media-category";
 import type { Media, Thumbnail } from "@/drizzle/schema";
+import { BookmarkBtn } from "./bookmark-btn";
 
 interface MediaCardProps {
   isTrending: boolean;
@@ -58,18 +59,11 @@ export function MediaCard({ isTrending, media }: MediaCardProps) {
               )}
               alt="trending media thumbnail"
             />
-            <div
-              className={cn(
-                "absolute top-2 right-2 w-8 h-8 bg-black bg-opacity-50 rounded-full flex items-center justify-center"
-              )}
-            >
-              <Image
-                src="/icons/bookmark-empty.svg"
-                width={12}
-                height={14}
-                alt="bookmark icon"
-              />
-            </div>
+            <BookmarkBtn
+              isBookmarked={media.isBookmarked}
+              mediaId={media.id}
+              mediaTitle={media.title}
+            />
           </>
         ) : (
           <>
@@ -104,18 +98,11 @@ export function MediaCard({ isTrending, media }: MediaCardProps) {
               )}
               alt="trending media thumbnail"
             />
-            <div
-              className={cn(
-                "absolute top-2 right-2 w-8 h-8 bg-black bg-opacity-50 rounded-full flex items-center justify-center"
-              )}
-            >
-              <Image
-                src="/icons/bookmark-empty.svg"
-                width={12}
-                height={14}
-                alt="bookmark icon"
-              />
-            </div>
+            <BookmarkBtn
+              isBookmarked={media.isBookmarked}
+              mediaId={media.id}
+              mediaTitle={media.title}
+            />
           </>
         )}
       </CardContent>
