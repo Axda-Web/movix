@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import db from "@/drizzle/db";
 import { medias } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 
 import { MediaSection } from "@/components/media-section";
 
@@ -11,6 +11,7 @@ export default async function MoviesPage() {
     with: {
       thumbnails: true,
     },
+    orderBy: desc(medias.createdAt),
   });
 
   return (
