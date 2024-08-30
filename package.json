@@ -10,6 +10,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "db:generate": "npx drizzle-kit generate",
+    "db:push": "npx drizzle-kit push",
     "db:clean": "npx drizzle-kit drop",
     "db:migrate": "tsx drizzle/migrate.ts",
     "db:studio": "npx drizzle-kit studio",
