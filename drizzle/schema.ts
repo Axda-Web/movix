@@ -27,6 +27,8 @@ export const medias = pgTable("media", {
   rating: mediaRatingEnum("rating").notNull(),
   isBookmarked: boolean("isBookmarked").notNull(),
   isTrending: boolean("isTrending").notNull(),
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
 });
 
 export const mediasRelations = relations(medias, ({ many }) => ({

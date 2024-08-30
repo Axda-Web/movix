@@ -1,14 +1,16 @@
 "use client";
 
-// import { Button } from "./ui/button";
+import { useState } from "react";
+import { Button } from "./ui/button";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { toggleBookmark } from "@/server-actions";
 import { useToast } from "@/components/ui/use-toast";
+import { LoaderCircle } from "lucide-react";
 
-// TODO: Switch to shadcn Button component
 // TODO: Add auth check inside server action
 // TODO: Change server action return value
+// TODO: Prevent media listing order changes when bookmarking
 
 interface BookmarkBtnProps {
   isBookmarked: boolean;
@@ -21,15 +23,20 @@ export function BookmarkBtn({
   mediaId,
   mediaTitle,
 }: BookmarkBtnProps) {
+  const [isDBRequestLoading, setIsDBRequestLoading] = useState(false);
   const { toast } = useToast();
 
   return (
-    <button
+    <Button
+      disabled={isDBRequestLoading}
       onClick={async () => {
+        setIsDBRequestLoading(true);
         const actionResult = await toggleBookmark({
           isBookmarked: !isBookmarked,
           mediaId,
         });
+
+        setIsDBRequestLoading(false);
 
         if (actionResult?.data) {
           toast({
@@ -45,11 +52,14 @@ export function BookmarkBtn({
         }
       }}
       className={cn(
-        "absolute top-2 right-2 w-8 h-8 bg-black bg-opacity-50 rounded-full flex items-center justify-center"
+        "absolute top-2 right-2 z-10 w-8 h-8 bg-black bg-opacity-50 rounded-full flex items-center justify-center"
       )}
     >
-      {isBookmarked ? (
+      {isDBRequestLoading ? (
+        <LoaderCircle className="w-4 h-4 text-white animate-spin" />
+      ) : isBookmarked ? (
         <Image
+          className="text-white"
           src="/icons/bookmark-full.svg"
           width={12}
           height={14}
@@ -57,12 +67,13 @@ export function BookmarkBtn({
         />
       ) : (
         <Image
+          className="text-white"
           src="/icons/bookmark-empty.svg"
           width={12}
           height={14}
           alt="bookmark icon"
         />
       )}
-    </button>
+    </Button>
   );
 }
