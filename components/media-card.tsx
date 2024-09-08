@@ -35,7 +35,9 @@ export function MediaCard({ isTrending, media }: MediaCardProps) {
   );
 
   return (
-    <Card className={cn("bg-transparent border-none relative flex-shrink-0")}>
+    <Card
+      className={cn("bg-transparent border-none relative flex-shrink-0 w-fit")}
+    >
       <CardContent className={cn("p-0 relative w-fit")}>
         {isTrending ? (
           <>
