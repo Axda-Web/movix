@@ -1,6 +1,10 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { NavIcon } from "./nav-icon";
 
 import { NAV_ITEMS } from "@/constants/nav";
 
@@ -9,6 +13,7 @@ import { NAV_ITEMS } from "@/constants/nav";
 // TODO: Add dynamic profile image
 
 export const NavBar = () => {
+  const pathname = usePathname();
   return (
     <section
       className={cn(
@@ -34,18 +39,16 @@ export const NavBar = () => {
             "lg:flex-col lg:gap-x-0 lg:gap-y-10 lg:absolute lg:top-36 lg:left-1/2 lg:-translate-x-1/2"
           )}
         >
-          {NAV_ITEMS.map(({ label, href, icon }) => (
+          {NAV_ITEMS.map(({ label, href, iconPath }) => (
             <li key={label}>
               <Link href={href}>
-                <Image
-                  className={cn(
-                    "fill-current text-white w-4 h-4",
-                    "md:w-5 md:h-5"
-                  )}
-                  src={icon}
-                  width={20}
-                  height={20}
-                  alt={label}
+                <NavIcon
+                  className={cn({
+                    "text-white": pathname === href,
+                    "w-[17px] ml-px": label === "Bookmarked medias",
+                  })}
+                  dangerouslySetInnerHTML={{ __html: iconPath }}
+                  aria-label={label}
                 />
               </Link>
             </li>
