@@ -208,7 +208,7 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "group h-6 w-6 rounded-full flex items-center justify-center hover:bg-gray-300",
+        "group h-6 w-6 rounded-full flex items-center justify-center hover:bg-white transition",
         "md:h-8 md:w-8",
         className
       )}
@@ -218,7 +218,7 @@ const CarouselPrevious = React.forwardRef<
     >
       <ArrowLeft
         className={cn(
-          "h-3 w-3 text-gray-300 group-hover:text-background",
+          "h-3 w-3 text-white group-hover:text-background transition",
           "md:h-4 md:w-4"
         )}
       />
@@ -240,7 +240,7 @@ const CarouselNext = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "group h-6 w-6 rounded-full flex items-center justify-center hover:bg-gray-300",
+        "group h-6 w-6 rounded-full flex items-center justify-center hover:bg-white transition",
         "md:h-8 md:w-8",
         className
       )}
@@ -250,7 +250,7 @@ const CarouselNext = React.forwardRef<
     >
       <ArrowRight
         className={cn(
-          "h-3 w-3 text-gray-300 group-hover:text-background",
+          "h-3 w-3 text-white group-hover:text-background transition",
           "md:h-4 md:w-4"
         )}
       />
@@ -293,10 +293,10 @@ const CarouselDots = React.forwardRef<
           <Button
             key={i}
             className={cn(
-              `mx-1 h-1.5 w-1.5 rounded-full p-0 ${
+              `transition mx-1 h-1.5 w-1.5 rounded-full p-0 ${
                 i === currentSlide
-                  ? "scale-125 transform bg-gray-300 hover:bg-gray-300"
-                  : "bg-gray-500 hover:bg-gray-500"
+                  ? "scale-125 transform bg-white hover:bg-white"
+                  : "bg-secondary hover:bg-secondary"
               }`,
               "md:h-2 md:w-2"
             )}
