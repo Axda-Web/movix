@@ -1,16 +1,20 @@
 import { cn } from "@/lib/utils";
 import db from "@/drizzle/db";
 import { medias } from "@/drizzle/schema";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, count } from "drizzle-orm";
 
 import { MediaSection } from "@/components/media-section";
+import { MediasPagination } from "@/components/medias-pagination";
 
-// TODO: Switch from horizontal scroll to shadcn carousel
-// TODO: Add pagination or infinite scroll to the recommended for you section
-// TODO: Fix media card width problem on desktop
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { page: string };
+}) {
+  const currentPage = Number(searchParams?.page) || 1;
+  const itemsPerPage = 12;
 
-export default async function Home() {
-  const [trendingMedias, recommendedMedias] = await Promise.all([
+  const [trendingMedias, recommendedMedias, mediaCount] = await Promise.all([
     db.query.medias.findMany({
       where: eq(medias.isTrending, true),
       with: {
@@ -24,8 +28,18 @@ export default async function Home() {
         thumbnails: true,
       },
       orderBy: [desc(medias.createdAt), desc(medias.title)],
+      limit: itemsPerPage,
+      offset: (currentPage - 1) * itemsPerPage,
     }),
+    db
+      .select({ count: count() })
+      .from(medias)
+      .where(eq(medias.isTrending, false)),
   ]);
+
+  const totalPages = Math.ceil(
+    (mediaCount ? mediaCount[0].count : 1) / itemsPerPage
+  );
 
   return (
     <div className={cn("px-4", "md:px-0")}>
@@ -34,11 +48,14 @@ export default async function Home() {
         isTrending={true}
         medias={trendingMedias}
       />
-      <MediaSection
-        title="Recommended for you"
-        isTrending={false}
-        medias={recommendedMedias}
-      />
+      <div id="recommended-section">
+        <MediaSection
+          title="Recommended for you"
+          isTrending={false}
+          medias={recommendedMedias}
+        />
+        {totalPages > 1 ? <MediasPagination totalPages={totalPages} /> : null}
+      </div>
     </div>
   );
 }

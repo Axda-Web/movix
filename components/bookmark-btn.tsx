@@ -29,6 +29,7 @@ export function BookmarkBtn({
   return (
     <Button
       disabled={isDBRequestLoading}
+      size="icon"
       onClick={async () => {
         setIsDBRequestLoading(true);
         const actionResult = await toggleBookmark({
@@ -52,7 +53,7 @@ export function BookmarkBtn({
         }
       }}
       className={cn(
-        "absolute top-2 right-2 z-10 w-8 h-8 bg-black bg-opacity-50 rounded-full flex items-center justify-center"
+        "absolute top-2 right-2 bg-black bg-opacity-50 rounded-full"
       )}
     >
       {isDBRequestLoading ? (

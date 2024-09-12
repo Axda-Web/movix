@@ -23,7 +23,7 @@ export function TrendingMediasCarousel({
 }: TrendingMediasCarouselProps) {
   return (
     <Carousel>
-      <CarouselContent className={cn("")}>
+      <CarouselContent>
         {medias.map((media) => (
           <CarouselItem key={media.id}>
             <MediaCard isTrending media={media} />
