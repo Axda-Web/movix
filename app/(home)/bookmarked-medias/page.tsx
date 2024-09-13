@@ -5,6 +5,8 @@ import { eq, and } from "drizzle-orm";
 
 import { MediaSection } from "@/components/media-section";
 
+// TODO: Add pagination
+
 export default async function BookmarkedMediasPage() {
   const [bookmarkedMovies, bookmarkedSeries] = await Promise.all([
     db.query.medias.findMany({
