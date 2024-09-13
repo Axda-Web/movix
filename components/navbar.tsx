@@ -8,7 +8,7 @@ import { NavIcon } from "./nav-icon";
 
 import { NAV_ITEMS } from "@/constants/nav";
 
-// TODO: Mangage hover & active states for svg nav items
+// TODO: Manage hover & active states for svg nav items
 // TODO: Remove x padding on mobile
 // TODO: Add dynamic profile image
 
