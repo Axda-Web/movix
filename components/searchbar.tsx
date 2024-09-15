@@ -29,17 +29,9 @@ export function SearchBar({ placeholder }: SearchBarProps) {
     resolver: zodResolver(formSchema),
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
-
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
         className={cn("w-full max-h-fit px-4", "md:px-6", "lg:px-0")}
       >
         <FormField
@@ -53,11 +45,6 @@ export function SearchBar({ placeholder }: SearchBarProps) {
                 <SearchInput
                   type="search"
                   placeholder={placeholder}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e);
-                    console.log(e.target.value);
-                  }}
                 />
               </FormControl>
               <FormMessage />
