@@ -9,7 +9,7 @@ import { MediasPagination } from "@/components/medias-pagination";
 export default async function MoviesPage({
   searchParams,
 }: {
-  searchParams: { page: string };
+  searchParams: Record<string, string | string[] | undefined>;
 }) {
   const currentPage = Number(searchParams?.page) || 1;
   const itemsPerPage = 16;
