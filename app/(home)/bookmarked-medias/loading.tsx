@@ -6,11 +6,10 @@ export default function BookmarkedMediasLoading() {
     <div
       className={cn(
         "min-h-screen w-full mx-auto max-w-[1272px] px-4",
-        "md:px-6 md:py-6",
-        "lg:py-8"
+        "md:px-6 md:py-6"
       )}
     >
-      <div className={cn("mb-6 mt-16", "md:mb-10 md:mt-24")}>
+      <div className={cn("mb-6", "md:mb-24")}>
         <Skeleton className={cn("w-[150px] h-[30px] mb-8", "md:w-[300px]")} />
         <div
           className={cn(

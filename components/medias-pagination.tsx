@@ -5,29 +5,37 @@ import { cn } from "@/lib/utils";
 import {
   Pagination,
   PaginationContent,
-  // PaginationEllipsis,
+  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { usePathname, useSearchParams } from "next/navigation";
-
-// TODO: Implement pagination ellipsis
+import { usePathname } from "next/navigation";
+import { useQueryState } from "nuqs";
 
 interface MediasPaginationProps {
   totalPages: number;
 }
 
+// TODO: Add pagination ellipsis
+
 export function MediasPagination({ totalPages }: MediasPaginationProps) {
+  const [page, setPage] = useQueryState("page", {
+    defaultValue: 1,
+    parse: (value) => parseInt(value, 10),
+    shallow: false,
+  });
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get("page")) || 1;
+
+  const currentPage = page;
 
   const createPageURL = (pageNumber: number | string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("page", pageNumber.toString());
-    return `${pathname}?${params.toString()}#recommended-section`;
+    return `${pathname}?page=${pageNumber}#recommended-section`;
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
   };
 
   return (
@@ -41,7 +49,12 @@ export function MediasPagination({ totalPages }: MediasPaginationProps) {
             })}
             href={currentPage > 1 ? createPageURL(currentPage - 1) : "#"}
             aria-disabled={currentPage <= 1}
-            disabled={currentPage <= 1}
+            onClick={(e) => {
+              if (currentPage > 1) {
+                e.preventDefault();
+                handlePageChange(currentPage - 1);
+              }
+            }}
           />
         </PaginationItem>
         {[...Array(totalPages)].map((_, i) => (
@@ -50,6 +63,10 @@ export function MediasPagination({ totalPages }: MediasPaginationProps) {
               className={cn("hover:text-white hover:bg-background transition")}
               href={createPageURL(i + 1)}
               isActive={currentPage === i + 1}
+              onClick={(e) => {
+                e.preventDefault();
+                handlePageChange(i + 1);
+              }}
             >
               {i + 1}
             </PaginationLink>
@@ -65,7 +82,12 @@ export function MediasPagination({ totalPages }: MediasPaginationProps) {
               currentPage < totalPages ? createPageURL(currentPage + 1) : "#"
             }
             aria-disabled={currentPage >= totalPages}
-            disabled={currentPage >= totalPages}
+            onClick={(e) => {
+              if (currentPage < totalPages) {
+                e.preventDefault();
+                handlePageChange(currentPage + 1);
+              }
+            }}
           />
         </PaginationItem>
       </PaginationContent>

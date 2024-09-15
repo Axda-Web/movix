@@ -17,9 +17,7 @@ interface MediaCardProps {
   media: Media & { thumbnails: Thumbnail[] };
 }
 
-// TODO: Fix image size + Grid
-// TODO: Add bookmark feature
-// TODO: Add trending slider
+// TODO: Diminish bookmark button size
 // TODO: Add active and hover states
 
 export function MediaCard({ isTrending, media }: MediaCardProps) {
@@ -39,6 +37,13 @@ export function MediaCard({ isTrending, media }: MediaCardProps) {
       className={cn("bg-transparent border-none relative flex-shrink-0 w-fit")}
     >
       <CardContent className={cn("p-0 relative w-fit")}>
+        {isTrending ? (
+          <div
+            className={cn(
+              "absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/50 to-transparent"
+            )}
+          />
+        ) : null}
         {isTrending ? (
           <>
             <Image

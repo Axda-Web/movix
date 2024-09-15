@@ -1,18 +1,41 @@
 import { cn } from "@/lib/utils";
 import db from "@/drizzle/db";
 import { medias } from "@/drizzle/schema";
-import { eq, desc, count } from "drizzle-orm";
+import { eq, desc, count, ilike, and } from "drizzle-orm";
+import type { Media, Thumbnail } from "@/drizzle/schema";
+type MediaType = Media & { thumbnails: Thumbnail[] };
 
 import { MediaSection } from "@/components/media-section";
 import { MediasPagination } from "@/components/medias-pagination";
+import { SearchResults } from "@/components/ui/search-results";
+import { searchParamsCache } from "@/searchParams";
 
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { page: string };
+  searchParams: Record<string, string | string[] | undefined>;
 }) {
-  const currentPage = Number(searchParams?.page) || 1;
+  const { page, query } = searchParamsCache.parse(searchParams);
+  const currentPage = page || 1;
   const itemsPerPage = 12;
+
+  let mediaSearchResults: MediaType[] = [];
+  let mediaSearchCount = [{ count: 0 }];
+
+  if (query) {
+    [mediaSearchResults, mediaSearchCount] = await Promise.all([
+      db.query.medias.findMany({
+        where: ilike(medias.title, `%${query}%`),
+        with: {
+          thumbnails: true,
+        },
+      }),
+      db
+        .select({ count: count() })
+        .from(medias)
+        .where(ilike(medias.title, `%${query}%`)),
+    ]);
+  }
 
   const [trendingMedias, recommendedMedias, mediaCount] = await Promise.all([
     db.query.medias.findMany({
@@ -43,19 +66,31 @@ export default async function Home({
 
   return (
     <div className={cn("px-4", "md:px-0")}>
-      <MediaSection
-        title="Trending"
-        isTrending={true}
-        medias={trendingMedias}
-      />
-      <div id="recommended-section">
-        <MediaSection
-          title="Recommended for you"
-          isTrending={false}
-          medias={recommendedMedias}
+      {query ? (
+        <SearchResults
+          queryTerm={query}
+          medias={mediaSearchResults}
+          totalResults={mediaSearchCount[0].count}
         />
-        {totalPages > 1 ? <MediasPagination totalPages={totalPages} /> : null}
-      </div>
+      ) : (
+        <>
+          <MediaSection
+            title="Trending"
+            isTrending={true}
+            medias={trendingMedias}
+          />
+          <div id="recommended-section">
+            <MediaSection
+              title="Recommended for you"
+              isTrending={false}
+              medias={recommendedMedias}
+            />
+            {totalPages > 1 ? (
+              <MediasPagination totalPages={totalPages} />
+            ) : null}
+          </div>
+        </>
+      )}
     </div>
   );
 }

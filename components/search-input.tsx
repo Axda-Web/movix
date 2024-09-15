@@ -1,11 +1,19 @@
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { useQueryState } from "nuqs";
 
 interface SearchInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 export function SearchInput(props: SearchInputProps) {
+  const [_, setQuery] = useQueryState("query", {
+    defaultValue: "",
+    parse: (value) => value.trim().toLowerCase(),
+    shallow: false,
+    throttleMs: 1000,
+  });
+
   return (
     <>
       <Image
@@ -21,6 +29,7 @@ export function SearchInput(props: SearchInputProps) {
           "block w-full bg-transparent px-4 py-6",
           "md:px-6 md:py-8 md:text-2xl"
         )}
+        onChange={(e) => setQuery(e.target.value)}
       />
     </>
   );
