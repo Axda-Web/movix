@@ -62,7 +62,7 @@ export function BookmarkBtn({
         <Image
           className="text-white"
           src="/icons/bookmark-full.svg"
-          width={12}
+          width={10}
           height={14}
           alt="bookmark icon"
         />
@@ -70,7 +70,7 @@ export function BookmarkBtn({
         <Image
           className="text-white"
           src="/icons/bookmark-empty.svg"
-          width={12}
+          width={10}
           height={14}
           alt="bookmark icon"
         />
