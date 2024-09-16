@@ -2,9 +2,15 @@ import { cn } from "@/lib/utils";
 import db from "@/drizzle/db";
 import { medias } from "@/drizzle/schema";
 import { eq, desc, count } from "drizzle-orm";
+import type { Metadata } from "next";
 
 import { MediaSection } from "@/components/media-section";
 import { MediasPagination } from "@/components/medias-pagination";
+
+export const metadata: Metadata = {
+  title: "Movix | Movies",
+  description: "Browse our collection of movies",
+};
 
 export default async function MoviesPage({
   searchParams,

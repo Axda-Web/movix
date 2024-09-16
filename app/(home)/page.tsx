@@ -4,11 +4,17 @@ import { medias } from "@/drizzle/schema";
 import { eq, desc, count, ilike, and } from "drizzle-orm";
 import type { Media, Thumbnail } from "@/drizzle/schema";
 type MediaType = Media & { thumbnails: Thumbnail[] };
+import type { Metadata } from "next";
 
 import { MediaSection } from "@/components/media-section";
 import { MediasPagination } from "@/components/medias-pagination";
 import { SearchResults } from "@/components/ui/search-results";
 import { searchParamsCache } from "@/searchParams";
+
+export const metadata: Metadata = {
+  title: "Movix | Home",
+  description: "Movix is a movie and TV show streaming platform",
+};
 
 export default async function Home({
   searchParams,
