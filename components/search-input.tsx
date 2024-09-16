@@ -26,7 +26,7 @@ export function SearchInput(props: SearchInputProps) {
       <Input
         {...props}
         className={cn(
-          "block w-full bg-transparent px-4 py-6",
+          "block w-full bg-transparent px-4 py-6 caret-accent",
           "md:px-6 md:py-8 md:text-2xl"
         )}
         onChange={(e) => setQuery(e.target.value)}
