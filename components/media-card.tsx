@@ -11,14 +11,13 @@ import { cn } from "@/lib/utils";
 import { MediaCategory, DotSeparator } from "./media-category";
 import type { Media, Thumbnail } from "@/drizzle/schema";
 import { BookmarkBtn } from "./bookmark-btn";
+import { MediaPlayBtn } from "./ui/media-play-btn";
+import Link from "next/link";
 
 interface MediaCardProps {
   isTrending: boolean;
   media: Media & { thumbnails: Thumbnail[] };
 }
-
-// TODO: Diminish bookmark button size
-// TODO: Add active and hover states
 
 export function MediaCard({ isTrending, media }: MediaCardProps) {
   const serializedThumbnails = media.thumbnails.reduce(
@@ -36,14 +35,12 @@ export function MediaCard({ isTrending, media }: MediaCardProps) {
     <Card
       className={cn("bg-transparent border-none relative flex-shrink-0 w-fit")}
     >
-      <CardContent className={cn("p-0 relative w-fit")}>
-        {isTrending ? (
-          <div
-            className={cn(
-              "absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/50 to-transparent"
-            )}
-          />
-        ) : null}
+      <CardContent className={cn("p-0 relative w-fit group cursor-pointer")}>
+        <div
+          className={cn(
+            "absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/50 to-transparent"
+          )}
+        />
         {isTrending ? (
           <>
             <Image
@@ -71,6 +68,7 @@ export function MediaCard({ isTrending, media }: MediaCardProps) {
               mediaId={media.id}
               mediaTitle={media.title}
             />
+            <MediaPlayBtn />
           </>
         ) : (
           <>
@@ -110,6 +108,7 @@ export function MediaCard({ isTrending, media }: MediaCardProps) {
               mediaId={media.id}
               mediaTitle={media.title}
             />
+            <MediaPlayBtn />
           </>
         )}
       </CardContent>

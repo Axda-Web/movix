@@ -10,7 +10,7 @@ import { LoaderCircle } from "lucide-react";
 
 // TODO: Add auth check inside server action
 // TODO: Change server action return value
-// TODO: Prevent media listing order changes when bookmarking
+// TODO: Add bookmark btn hover state
 
 interface BookmarkBtnProps {
   isBookmarked: boolean;
@@ -68,7 +68,7 @@ export function BookmarkBtn({
         />
       ) : (
         <Image
-          className="text-white"
+          className="text-red-500"
           src="/icons/bookmark-empty.svg"
           width={10}
           height={14}
