@@ -2,8 +2,13 @@ import { cn } from "@/lib/utils";
 import db from "@/drizzle/db";
 import { medias } from "@/drizzle/schema";
 import { eq, and } from "drizzle-orm";
-
+import type { Metadata } from "next";
 import { MediaSection } from "@/components/media-section";
+
+export const metadata: Metadata = {
+  title: "Movix | Bookmarked",
+  description: "Browse your bookmarked media",
+};
 
 // TODO: Add pagination
 
