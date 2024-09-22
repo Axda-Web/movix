@@ -38,7 +38,7 @@ export function MediaCard({ isTrending, media }: MediaCardProps) {
       <CardContent className={cn("p-0 relative w-fit group cursor-pointer")}>
         <div
           className={cn(
-            "absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/50 to-transparent"
+            "absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/50 to-transparent rounded-lg"
           )}
         />
         {isTrending ? (
