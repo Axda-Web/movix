@@ -6,6 +6,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { toggleBookmark } from "@/server-actions";
 import { useToast } from "@/components/ui/use-toast";
+import { BookmarkIcon } from "./bookmark-icon";
 import { LoaderCircle } from "lucide-react";
 
 // TODO: Add auth check inside server action
@@ -53,28 +54,39 @@ export function BookmarkBtn({
         }
       }}
       className={cn(
-        "absolute top-2 right-2 bg-black bg-opacity-50 rounded-full"
+        "absolute top-2 right-2 bg-black bg-opacity-50 rounded-full group/bookmark-btn hover:bg-opacity-100 hover:bg-white transition"
       )}
     >
       {isDBRequestLoading ? (
         <LoaderCircle className="w-4 h-4 text-white animate-spin" />
-      ) : isBookmarked ? (
-        <Image
-          className="text-white"
-          src="/icons/bookmark-full.svg"
-          width={10}
-          height={14}
-          alt="bookmark icon"
-        />
       ) : (
-        <Image
-          className="text-red-500"
-          src="/icons/bookmark-empty.svg"
-          width={10}
-          height={14}
-          alt="bookmark icon"
+        <BookmarkIcon
+          className={cn("stroke-2 transition overflow-visible", {
+            "fill-white stroke-none group-hover/bookmark-btn:fill-black":
+              isBookmarked,
+            "fill-transparent stroke-white group-hover/bookmark-btn:stroke-black":
+              !isBookmarked,
+          })}
         />
       )}
     </Button>
   );
 }
+
+// isBookmarked ? (
+//   <Image
+//     className="text-white"
+//     src="/icons/bookmark-full.svg"
+//     width={10}
+//     height={14}
+//     alt="bookmark icon"
+//   />
+// ) : (
+//   <Image
+//     className="text-red-500"
+//     src="/icons/bookmark-empty.svg"
+//     width={10}
+//     height={14}
+//     alt="bookmark icon"
+//   />
+// )

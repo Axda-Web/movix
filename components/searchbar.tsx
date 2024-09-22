@@ -17,8 +17,7 @@ const formSchema = z.object({
   search: z.string().trim().max(50),
 });
 
-// TODO: Implement onChange form submission
-// TODO: Add debouncer
+// TODO: Make sure the searchbar is 100% width even if their are no results
 
 interface SearchBarProps {
   placeholder: string;
@@ -32,20 +31,17 @@ export function SearchBar({ placeholder }: SearchBarProps) {
   return (
     <Form {...form}>
       <form
-        className={cn("w-full max-h-fit px-4", "md:px-6", "lg:px-0")}
+        className={cn("w-full max-h-fit px-4", "md:px-0", "lg:mt-4 lg:mb-6")}
       >
         <FormField
           control={form.control}
           name="search"
           render={({ field }) => (
             <FormItem
-              className={cn("flex justify-start items-center space-y-0")}
+              className={cn("flex justify-start items-center space-y-0 flex-1")}
             >
-              <FormControl>
-                <SearchInput
-                  type="search"
-                  placeholder={placeholder}
-                />
+              <FormControl className={cn("w-full")}>
+                <SearchInput type="search" placeholder={placeholder} />
               </FormControl>
               <FormMessage />
             </FormItem>
