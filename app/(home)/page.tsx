@@ -3,7 +3,6 @@ import db from "@/drizzle/db";
 import { medias } from "@/drizzle/schema";
 import { eq, desc, count, ilike, and } from "drizzle-orm";
 import type { Media, Thumbnail } from "@/drizzle/schema";
-type MediaType = Media & { thumbnails: Thumbnail[] };
 import type { Metadata } from "next";
 
 import { MediaSection } from "@/components/media-section";
@@ -11,10 +10,14 @@ import { MediasPagination } from "@/components/medias-pagination";
 import { SearchResults } from "@/components/ui/search-results";
 import { searchParamsCache } from "@/searchParams";
 
+type MediaType = Media & { thumbnails: Thumbnail[] };
+
 export const metadata: Metadata = {
   title: "Movix | Home",
   description: "Movix is a movie and TV show streaming platform",
 };
+
+// TODO: Handle multiple static page generation with nextjs
 
 export default async function Home({
   searchParams,
@@ -27,8 +30,9 @@ export default async function Home({
 
   let mediaSearchResults: MediaType[] = [];
   let mediaSearchCount = [{ count: 0 }];
+  let isSearchQueryPending = true;
 
-  if (query) {
+  if (query?.length > 0) {
     [mediaSearchResults, mediaSearchCount] = await Promise.all([
       db.query.medias.findMany({
         where: ilike(medias.title, `%${query}%`),
@@ -41,6 +45,7 @@ export default async function Home({
         .from(medias)
         .where(ilike(medias.title, `%${query}%`)),
     ]);
+    isSearchQueryPending = false;
   }
 
   const [trendingMedias, recommendedMedias, mediaCount] = await Promise.all([
@@ -72,11 +77,12 @@ export default async function Home({
 
   return (
     <div className={cn("px-4", "md:px-0")}>
-      {query ? (
+      {query?.length > 0 ? (
         <SearchResults
           queryTerm={query}
           medias={mediaSearchResults}
           totalResults={mediaSearchCount[0].count}
+          isSearchQueryPending={isSearchQueryPending}
         />
       ) : (
         <>
