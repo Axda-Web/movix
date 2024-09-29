@@ -6,6 +6,8 @@ import { medias } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
 import db from "@/drizzle/db";
 import { revalidatePath } from "next/cache";
+import { signIn, signOut } from "@/auth";
+import { redirect } from "next/navigation";
 
 const bookmarkSchema = z.object({
   isBookmarked: z.boolean(),
@@ -28,3 +30,12 @@ export const toggleBookmark = actionClient
       console.error(error);
     }
   });
+
+export async function signInWithGitHub() {
+  await signIn("github", { redirectTo: "/account" });
+}
+
+export async function signOutFromGitHub() {
+  await signOut();
+  console.log("signOutFromGitHub triggered ************");
+}

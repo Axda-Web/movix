@@ -3,9 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { AuthFormInput } from "./auth-form-input";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,8 +12,9 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { signInWithGitHub } from "@/server-actions";
+import { Github } from "lucide-react";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -99,6 +98,19 @@ export function AuthForm({ isSignUp }: AuthFormProps) {
           {isSignUp ? "Create Account" : "Login to your account"}
         </Button>
       </form>
+      {!isSignUp ? (
+        <form action={signInWithGitHub}>
+          <Button
+            className={cn(
+              "w-full text-white flex items-center gap-2 border border-white mt-3 py-[14px] bg-muted transition hover:border-none hover:bg-white hover:text-muted-foreground"
+            )}
+            type="submit"
+          >
+            <Github className={cn("w-4 h-4")} />
+            Signin with GitHub
+          </Button>
+        </form>
+      ) : null}
     </Form>
   );
 }
