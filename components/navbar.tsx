@@ -5,14 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { NavIcon } from "./nav-icon";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { CircleUserRound } from "lucide-react";
 
 import { NAV_ITEMS } from "@/constants/nav";
+import { TooltipWrapper } from "./tooltip-wrapper";
 
-// TODO: Manage hover & active states for svg nav items
-// TODO: Remove x padding on mobile
-// TODO: Add dynamic profile image
+interface NavBarProps {
+  avatarUrl?: string | null;
+}
 
-export const NavBar = () => {
+export const NavBar = ({ avatarUrl }: NavBarProps) => {
   const pathname = usePathname();
   return (
     <section
@@ -22,7 +25,7 @@ export const NavBar = () => {
         "lg:flex-col lg:h-[calc(100vh-64px)] lg:p-8 lg:rounded-2xl lg:fixed"
       )}
     >
-      <div>
+      <Link href="/">
         <Image
           className={cn("w-6 h-5", "md:w-8 md:h-6")}
           src="/icons/movix.svg"
@@ -30,7 +33,7 @@ export const NavBar = () => {
           height={25}
           alt="movix"
         />
-      </div>
+      </Link>
       <nav>
         <ul
           className={cn(
@@ -55,15 +58,38 @@ export const NavBar = () => {
           ))}
         </ul>
       </nav>
-      <div>
-        <Image
-          src="/icons/profile-pic.svg"
-          className={cn("w-6 h-6", "md:w-8 md:h-8", "lg:w-10 lg:h-10")}
-          width={40}
-          height={40}
-          alt="user profile pic"
-        />
-      </div>
+      {avatarUrl ? (
+        <Link href="/account">
+          <TooltipWrapper content="Account">
+            <Avatar
+              className={cn("w-6 h-6", "md:w-8 md:h-8", "lg:w-10 lg:h-10")}
+            >
+              <AvatarImage src={avatarUrl} alt="user profile pic" />
+              <AvatarFallback>
+                <CircleUserRound
+                  className={cn(
+                    "w-6 h-6 stroke-1 stroke-secondary",
+                    "md:w-8 md:h-8",
+                    "lg:w-10 lg:h-10"
+                  )}
+                />
+              </AvatarFallback>
+            </Avatar>
+          </TooltipWrapper>
+        </Link>
+      ) : (
+        <Link href="/login">
+          <TooltipWrapper content="Login">
+            <CircleUserRound
+              className={cn(
+                "w-6 h-6 stroke-1 stroke-secondary",
+                "md:w-8 md:h-8",
+                "lg:w-10 lg:h-10"
+              )}
+            />
+          </TooltipWrapper>
+        </Link>
+      )}
     </section>
   );
 };
