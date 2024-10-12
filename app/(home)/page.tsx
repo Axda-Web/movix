@@ -1,7 +1,8 @@
+import React from "react";
 import { cn } from "@/lib/utils";
 import db from "@/drizzle/db";
 import { medias } from "@/drizzle/schema";
-import { eq, desc, count, ilike, and } from "drizzle-orm";
+import { eq, desc, count, ilike } from "drizzle-orm";
 import type { Media, Thumbnail } from "@/drizzle/schema";
 import type { Metadata } from "next";
 

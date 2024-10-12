@@ -21,7 +21,7 @@ export default async function RootLayout({
   const session = await auth();
 
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en">
       <body
         className={cn(
           "min-h-screen font-sans antialiased w-full mx-auto max-w-screen-2xl",

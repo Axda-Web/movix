@@ -24,7 +24,7 @@ export function MediaSection({ title, isTrending, medias }: MediaCardProps) {
           className={cn(
             "grid grid-cols-2 gap-4",
             "md:grid-cols-3 md:gap-6",
-            "lg:grid-cols-4 lg:gap-10"
+            "xl:grid-cols-4 xl:gap-10"
           )}
         >
           {medias.map((media) => (

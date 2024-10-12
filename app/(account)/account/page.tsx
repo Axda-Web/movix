@@ -52,10 +52,13 @@ export default async function AccountPage({
   const totalPages = Math.ceil(bookmarkedMediasCount[0].count / itemsPerPage);
 
   return (
-    <section className={cn("text-whiten")}>
+    <section className={cn("text-whiten px-4 mt-8", "lg:mt-0")}>
       <div className={cn("flex justify-between items-center mb-4", "md:mb-6")}>
         <h1 className={cn("text-xl font-light", "md:text-3xl")}>My account</h1>
-        <form className={cn("absolute right-8")} action={signOutFromGitHub}>
+        <form
+          className={cn("absolute right-4", "md:right-8")}
+          action={signOutFromGitHub}
+        >
           <Button
             className={cn(
               "text-white hover:text-muted-foreground hover:bg-white transition"
@@ -73,7 +76,9 @@ export default async function AccountPage({
         userImage={session?.user?.image}
       />
       <BookmarkedMediasTable data={bookmarkedMedias} />
-      <MediasPagination totalPages={totalPages} />
+      <div className={cn("mt-6", "md:mt-8")}>
+        <MediasPagination totalPages={totalPages} />
+      </div>
     </section>
   );
 }

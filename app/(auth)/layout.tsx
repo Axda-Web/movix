@@ -37,7 +37,8 @@ export default function AuthLayout({
         >
           <section
             className={cn(
-              "min-h-screen w-full flex justify-center items-center"
+              "min-h-screen w-full flex justify-center px-6 mt-12",
+              "md:mt-24"
             )}
           >
             {children}

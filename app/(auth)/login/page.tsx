@@ -9,7 +9,13 @@ export default function LoginPage() {
   return (
     <div className={cn("flex w-full flex-col items-center gap-y-20")}>
       <Link href="/">
-        <Image src="/icons/movix.svg" width={32} height={26} alt="movix" />
+        <Image
+          src="/icons/movix.svg"
+          width={32}
+          height={26}
+          alt="movix"
+          className={cn("w-8 h-auto")}
+        />
       </Link>
       <article
         className={cn(
