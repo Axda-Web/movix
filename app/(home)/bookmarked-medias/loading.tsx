@@ -15,7 +15,7 @@ export default function BookmarkedMediasLoading() {
           className={cn(
             "grid max-w-full grid-cols-2 gap-4",
             "md:grid-cols-3 md:gap-6",
-            "lg:grid-cols-4 lg:gap-10"
+            "xl:grid-cols-4 xl:gap-10"
           )}
         >
           {Array.from({ length: 12 }).map((_, index) => (
@@ -24,7 +24,7 @@ export default function BookmarkedMediasLoading() {
               className={cn(
                 "rounded-lg w-[164px] h-[110px]",
                 "md:w-[220px] md:h-[140px]",
-                "lg:w-[280px] lg:h-[174px]"
+                "xl:w-[280px] xl:h-[174px]"
               )}
             />
           ))}
@@ -36,7 +36,7 @@ export default function BookmarkedMediasLoading() {
           className={cn(
             "grid max-w-full grid-cols-2 gap-4",
             "md:grid-cols-3 md:gap-6",
-            "lg:grid-cols-4 lg:gap-10"
+            "xl:grid-cols-4 xl:gap-10"
           )}
         >
           {Array.from({ length: 12 }).map((_, index) => (
@@ -45,7 +45,7 @@ export default function BookmarkedMediasLoading() {
               className={cn(
                 "rounded-lg w-[164px] h-[110px]",
                 "md:w-[220px] md:h-[140px]",
-                "lg:w-[280px] lg:h-[174px]"
+                "xl:w-[280px] xl:h-[174px]"
               )}
             />
           ))}

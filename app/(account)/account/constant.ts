@@ -1,8 +1,4 @@
-export const USER_PROFILE_TABLE_HEADER = [
-  "Name",
-  "Email address",
-  "Profile picture",
-];
+export const USER_PROFILE_TABLE_HEADER = ["Name", "Email address", "Picture"];
 
 export const BOOKMARKED_MEDIA_TABLE_HEADER = [
   "Thumbnail",

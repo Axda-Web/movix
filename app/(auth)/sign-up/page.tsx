@@ -8,7 +8,15 @@ import { cn } from "@/lib/utils";
 export default function LoginPage(props: any) {
   return (
     <div className={cn("flex flex-col items-center gap-y-20")}>
-      <Image src="/icons/movix.svg" width={32} height={26} alt="movix" />
+      <Link href="/">
+        <Image
+          src="/icons/movix.svg"
+          width={32}
+          height={26}
+          alt="movix"
+          className={cn("w-8 h-auto")}
+        />
+      </Link>
       <article
         className={cn(
           "w-full max-w-[400px] bg-muted p-6 rounded-[20px]",
