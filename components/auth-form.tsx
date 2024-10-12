@@ -13,8 +13,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
-import { signInWithGitHub } from "@/server-actions";
-import { Github } from "lucide-react";
+import {
+  signInWithGitHub,
+  signInWithGoogle,
+  loginUser,
+} from "@/server-actions";
+import { Github, Chrome } from "lucide-react";
+import { registerUser } from "@/server-actions";
+import { useRouter } from "next/navigation";
+import type { User } from "@/drizzle/schema";
+import { Separator } from "@/components/ui/separator";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -35,15 +43,28 @@ type AuthFormProps = {
 };
 
 export function AuthForm({ isSignUp }: AuthFormProps) {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (isSignUp) {
+      const result = (await registerUser(values)) as {
+        success: boolean;
+        user?: User;
+        error?: string;
+      };
+
+      if (result?.success) {
+        console.log("User registered successfully");
+        router.push("/account");
+      } else {
+        console.log("Failed to register user");
+      }
+    } else {
+      await loginUser(values);
+    }
   }
 
   return (
@@ -98,18 +119,36 @@ export function AuthForm({ isSignUp }: AuthFormProps) {
           {isSignUp ? "Create Account" : "Login to your account"}
         </Button>
       </form>
+      <div className={cn("flex items-center justify-center gap-3 my-6")}>
+        <Separator className={cn("w-1/5")} />
+        <span>Or</span>
+        <Separator className={cn("w-1/5")} />
+      </div>
       {!isSignUp ? (
-        <form action={signInWithGitHub}>
-          <Button
-            className={cn(
-              "w-full text-white flex items-center gap-2 border border-white mt-3 py-[14px] bg-muted transition hover:border-none hover:bg-white hover:text-muted-foreground"
-            )}
-            type="submit"
-          >
-            <Github className={cn("w-4 h-4")} />
-            Signin with GitHub
-          </Button>
-        </form>
+        <>
+          <form action={signInWithGitHub}>
+            <Button
+              className={cn(
+                "w-full text-white flex items-center gap-2 border border-white mt-3 py-[14px] bg-muted transition hover:border-none hover:bg-white hover:text-muted-foreground"
+              )}
+              type="submit"
+            >
+              <Github className={cn("w-4 h-4")} />
+              Signin with GitHub
+            </Button>
+          </form>
+          <form action={signInWithGoogle}>
+            <Button
+              className={cn(
+                "w-full text-white flex items-center gap-2 border border-white mt-3 py-[14px] bg-muted transition hover:border-none hover:bg-white hover:text-muted-foreground"
+              )}
+              type="submit"
+            >
+              <Chrome className={cn("w-4 h-4")} />
+              Signin with Google
+            </Button>
+          </form>
+        </>
       ) : null}
     </Form>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import {
   Pagination,
@@ -18,8 +18,6 @@ interface MediasPaginationProps {
   totalPages: number;
 }
 
-// TODO: Add pagination ellipsis
-
 export function MediasPagination({ totalPages }: MediasPaginationProps) {
   const [page, setPage] = useQueryState("page", {
     defaultValue: 1,
@@ -28,14 +26,57 @@ export function MediasPagination({ totalPages }: MediasPaginationProps) {
   });
   const pathname = usePathname();
 
+  useEffect(() => {
+    const recommendedSection = document.getElementById("recommended-section");
+    if (recommendedSection && page) {
+      recommendedSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [page]);
+
   const currentPage = page;
 
   const createPageURL = (pageNumber: number | string) => {
-    return `${pathname}?page=${pageNumber}#recommended-section`;
+    return `${pathname}?page=${pageNumber}`;
   };
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
+  };
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const ellipsis = <PaginationEllipsis />;
+
+    for (let i = 1; i <= totalPages; i++) {
+      if (
+        i === 1 ||
+        i === totalPages ||
+        (i >= currentPage - 1 && i <= currentPage + 1)
+      ) {
+        pageNumbers.push(
+          <PaginationItem key={i}>
+            <PaginationLink
+              className={cn("hover:text-white hover:bg-background transition")}
+              href={createPageURL(i)}
+              isActive={currentPage === i}
+              onClick={(e) => {
+                e.preventDefault();
+                handlePageChange(i);
+              }}
+            >
+              {i}
+            </PaginationLink>
+          </PaginationItem>
+        );
+      } else if (
+        (i === currentPage - 2 && currentPage > 3) ||
+        (i === currentPage + 2 && currentPage < totalPages - 2)
+      ) {
+        pageNumbers.push(<PaginationItem key={i}>{ellipsis}</PaginationItem>);
+      }
+    }
+
+    return pageNumbers;
   };
 
   return (
@@ -57,21 +98,7 @@ export function MediasPagination({ totalPages }: MediasPaginationProps) {
             }}
           />
         </PaginationItem>
-        {[...Array(totalPages)].map((_, i) => (
-          <PaginationItem key={i}>
-            <PaginationLink
-              className={cn("hover:text-white hover:bg-background transition")}
-              href={createPageURL(i + 1)}
-              isActive={currentPage === i + 1}
-              onClick={(e) => {
-                e.preventDefault();
-                handlePageChange(i + 1);
-              }}
-            >
-              {i + 1}
-            </PaginationLink>
-          </PaginationItem>
-        ))}
+        {renderPageNumbers()}
         <PaginationItem>
           <PaginationNext
             className={cn("hover:text-white hover:bg-background transition", {

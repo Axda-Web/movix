@@ -52,6 +52,7 @@ export function MediaCard({ isTrending, media }: MediaCardProps) {
                 "md:block md:w-[470px] md:h-[230px]"
               )}
               alt="trending media thumbnail"
+              priority
             />
             <Image
               src={serializedThumbnails.trending.small}
@@ -62,6 +63,7 @@ export function MediaCard({ isTrending, media }: MediaCardProps) {
                 "md:hidden"
               )}
               alt="trending media thumbnail"
+              priority
             />
             <BookmarkBtn
               isBookmarked={media.isBookmarked}
@@ -78,7 +80,7 @@ export function MediaCard({ isTrending, media }: MediaCardProps) {
               height={174}
               className={cn(
                 "hidden rounded-lg",
-                "lg:block lg:w-[280px] lg:h-[174px]"
+                "xl:block xl:w-[280px] xl:h-[174px]"
               )}
               alt="trending media thumbnail"
             />
@@ -89,7 +91,7 @@ export function MediaCard({ isTrending, media }: MediaCardProps) {
               className={cn(
                 "hidden rounded-lg",
                 "md:block md:w-[220px] md:h-[140px]",
-                "lg:hidden"
+                "xl:hidden"
               )}
               alt="trending media thumbnail"
             />

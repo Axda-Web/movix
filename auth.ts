@@ -1,10 +1,14 @@
 import NextAuth from "next-auth";
-// import Credentials from "next-auth/providers/credentials";
+import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import db from "./drizzle/db";
+import { users } from "./drizzle/schema";
+import { eq } from "drizzle-orm";
+import bcrypt from "bcryptjs";
 
-// TODO: Set up credentials auth
+// TODO: Complete credentials provider setup
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db),
@@ -13,31 +17,43 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   providers: [
     GitHub,
-    // Credentials({
-    // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-    // e.g. domain, username, password, 2FA token, etc.
-    // credentials: {
-    //   username: { label: "Username", type: "text", placeholder: "jsmith" },
-    //   password: { label: "Password", type: "password" },
-    // },
-    // authorize: async (credentials) => {
-    //   let user = null;
+    Google,
+    Credentials({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          return null;
+        }
 
-    // logic to salt and hash password
-    // const pwHash = saltAndHashPassword(credentials.password);
+        const user = await db
+          .select()
+          .from(users)
+          .where(eq(users.email, credentials.email.toString() ?? ""))
+          .limit(1);
 
-    // logic to verify if user exists
-    // user = await getUserFromDb(credentials.email, pwHash);
+        if (!user[0]) {
+          return null;
+        }
 
-    // if (!user) {
-    // No user found, so this is their first attempt to login
-    // meaning this is also the place you could do registration
-    // throw new Error("User not found.");
-    // }
+        const passwordMatch = await bcrypt.compare(
+          credentials.password.toString() ?? "",
+          user[0].password ?? ""
+        );
 
-    // return user object with the their profile data
-    // return user;
-    // },
-    // }),
+        if (!passwordMatch) {
+          return null;
+        }
+
+        return {
+          id: user[0].id,
+          email: user[0].email,
+          name: user[0].name,
+        };
+      },
+    }),
   ],
 });

@@ -62,8 +62,11 @@ export const users = pgTable("user", {
   name: text("name"),
   email: text("email").notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
+  password: varchar("password", { length: 72 }),
   image: text("image"),
 });
+
+export type User = InferSelectModel<typeof users>;
 
 export const accounts = pgTable(
   "account",

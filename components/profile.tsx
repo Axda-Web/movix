@@ -26,7 +26,7 @@ export function Profile({ userName, userEmail, userImage }: ProfileProps) {
             <TableHead
               key={header}
               className={cn("text-white font-bold w-36", {
-                "text-center": header === "Profile picture",
+                "text-center": header === "Picture",
               })}
             >
               {header}
